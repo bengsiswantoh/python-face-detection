@@ -1,9 +1,13 @@
 import cv2 as cv
 
 cap = cv.VideoCapture(0)
+print(cap.isOpened())
 
 while(cap.isOpened()):
     ret, frame = cap.read()
+
+    print(cap.get(cv.CAP_PROP_FRAME_WIDTH))
+    print(cap.get(cv.CAP_PROP_FRAME_HEIGHT))
 
     cv.imshow("Frame", frame)
 
