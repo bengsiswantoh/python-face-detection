@@ -1,4 +1,8 @@
+venv
+
 images
 videos
 faces
-venv
+
+trainer.yml
+label.pickle
