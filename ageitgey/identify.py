@@ -2,12 +2,12 @@ import face_recognition
 from PIL import Image, ImageDraw
 
 image_of_bill_gates = face_recognition.load_image_file(
-    './faces/bill gates/1.jpg')
+    './faces/bill-gates/1.jpg')
 bill_gates_face_encoding = face_recognition.face_encodings(image_of_bill_gates)[
     0]
 
 image_of_warren_buffet = face_recognition.load_image_file(
-    './faces/warren buffet/1.jpeg')
+    './faces/warren-buffet/1.jpeg')
 warren_buffet_face_encoding = face_recognition.face_encodings(image_of_warren_buffet)[
     0]
 
