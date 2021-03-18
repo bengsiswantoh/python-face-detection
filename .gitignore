@@ -5,4 +5,4 @@ videos
 faces
 
 trainer.yml
-label.pickle
+*.pickle

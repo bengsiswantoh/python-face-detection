@@ -1,33 +1,16 @@
 import cv2
 import numpy as np
 import face_recognition
+import pickle
 
 # Get a reference to webcam #0 (the default one)
 video_capture = cv2.VideoCapture(0)
 
-# Load a sample picture and learn how to recognize it.
-bill_gates = face_recognition.load_image_file("./faces/bill-gates/1.jpg")
-bill_gates_face_encoding = face_recognition.face_encodings(bill_gates)[0]
-
-# Load a second sample picture and learn how to recognize it.
-warren_buffet = face_recognition.load_image_file("./faces/warren-buffet/1.jpeg")
-warren_buffet_face_encoding = face_recognition.face_encodings(warren_buffet)[0]
-
-# Load a third sample picture and learn how to recognize it.
-beng = face_recognition.load_image_file("./faces/beng/1.png")
-beng_face_encoding = face_recognition.face_encodings(beng)[0]
-
-# Create arrays of known face encodings and their names
-known_face_encodings = [
-    bill_gates_face_encoding,
-    warren_buffet_face_encoding,
-    beng_face_encoding
-]
-known_face_names = [
-    "Bill Gates",
-    "Warren Buffet",
-    "Beng"
-]
+with open("face_data_ageitgey.pickle", "rb") as f:
+    data = pickle.load(f)
+    known_face_encodings = data["encodings"]
+    known_face_names = data["names"]
+    print(data["names"])
 
 # Initialize some variables
 face_locations = []
@@ -47,28 +30,31 @@ while True:
 
     # Only process every other frame of video to save time
     if process_this_frame:
-      # Find all the faces and face enqcodings in the frame of video
-      face_locations = face_recognition.face_locations(rgb_small_frame)
-      face_encodings = face_recognition.face_encodings(rgb_small_frame, face_locations)
+        # Find all the faces and face enqcodings in the frame of video
+        face_locations = face_recognition.face_locations(rgb_small_frame)
+        face_encodings = face_recognition.face_encodings(
+            rgb_small_frame, face_locations)
 
-      face_names = []
-      for face_encoding in face_encodings:
-          # See if the face is a match for the known face(s)
-          matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
-          name = "Unknown"
+        face_names = []
+        for face_encoding in face_encodings:
+            # See if the face is a match for the known face(s)
+            matches = face_recognition.compare_faces(
+                known_face_encodings, face_encoding)
+            name = "Unknown"
 
-          # # If a match was found in known_face_encodings, just use the first one.
-          # if True in matches:
-          #     first_match_index = matches.index(True)
-          #     name = known_face_names[first_match_index]
+            # # If a match was found in known_face_encodings, just use the first one.
+            # if True in matches:
+            #     first_match_index = matches.index(True)
+            #     name = known_face_names[first_match_index]
 
-          # Or instead, use the known face with the smallest distance to the new face
-          face_distances = face_recognition.face_distance(known_face_encodings, face_encoding)
-          best_match_index = np.argmin(face_distances)
-          if matches[best_match_index]:
-              name = known_face_names[best_match_index]
+            # Or instead, use the known face with the smallest distance to the new face
+            face_distances = face_recognition.face_distance(
+                known_face_encodings, face_encoding)
+            best_match_index = np.argmin(face_distances)
+            if matches[best_match_index]:
+                name = known_face_names[best_match_index]
 
-          face_names.append(name)
+            face_names.append(name)
 
     process_this_frame = not process_this_frame
 
@@ -84,9 +70,11 @@ while True:
         cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
 
         # Draw a label with a name below the face
-        cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 0, 255), cv2.FILLED)
+        cv2.rectangle(frame, (left, bottom - 35),
+                      (right, bottom), (0, 0, 255), cv2.FILLED)
         font = cv2.FONT_HERSHEY_DUPLEX
-        cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
+        cv2.putText(frame, name, (left + 6, bottom - 6),
+                    font, 1.0, (255, 255, 255), 1)
 
     # Display the resulting image
     cv2.imshow("Frame", frame)
