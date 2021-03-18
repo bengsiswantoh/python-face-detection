@@ -8,7 +8,7 @@ while(True):
     gray_vid = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
     cv.imshow("Frame", gray_vid)
 
-    if cv.waitKey(1) & 0xFF == ord("e"):
+    if cv.waitKey(1) & 0xFF == ord("q"):
         break
 
 cap.release()

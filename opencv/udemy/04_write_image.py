@@ -1,6 +1,6 @@
 import cv2 as cv
 
-img = cv.imread("images/chara_16.png", 1)
+img = cv.imread("images/bill warren.jpeg", 1)
 
 cv.imshow("image", img)
 

@@ -6,7 +6,9 @@ from PIL import Image
 import pickle
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-image_dir = os.path.join(BASE_DIR, "faces")
+CURRENT_DIR = os.path.abspath(os.getcwd())
+
+image_dir = os.path.join(CURRENT_DIR, "faces")
 
 face_cascade = cv.CascadeClassifier(
     "cascades/haarcascade_frontalface_default.xml")
@@ -18,8 +20,9 @@ y_labels = []
 x_train = []
 
 for root, dirs, files in os.walk(image_dir):
+    print(dirs)
     for file in files:
-        if file.endswith("jpeg") or file.endswith("png"):
+        if file.endswith("jpeg") or file.endswith("jpg") or file.endswith("png"):
             path = os.path.join(root, file)
             # label = os.path.basename(os.path.dirname(
             #     path)).replace(" ", "-").lower()

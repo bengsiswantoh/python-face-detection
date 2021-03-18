@@ -15,7 +15,7 @@ while(cap.isOpened()):
 
         cv.imshow("Frame", frame)
 
-        if cv.waitKey(1) & 0xFF == ord("e"):
+        if cv.waitKey(1) & 0xFF == ord("q"):
             break
 
 cap.release()

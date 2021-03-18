@@ -3,7 +3,7 @@ import cv2 as cv
 face_cascade = cv.CascadeClassifier(
     "cascades/haarcascade_frontalface_default.xml")
 
-img = cv.imread("images/chara_16.png")
+img = cv.imread("images/bill warren.jpeg")
 gray_img = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 face_detect = face_cascade.detectMultiScale(gray_img, 1.1, 4)
 
