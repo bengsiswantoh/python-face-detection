@@ -10,7 +10,6 @@ with open("face_data_ageitgey.pickle", "rb") as f:
     data = pickle.load(f)
     known_face_encodings = data["encodings"]
     known_face_names = data["names"]
-    print(data["names"])
 
 # Initialize some variables
 face_locations = []
@@ -59,7 +58,7 @@ while True:
     process_this_frame = not process_this_frame
 
     # Loop through each face in this frame of video
-    for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
+    for (top, right, bottom, left), name in zip(face_locations, face_names):
         # Scale back up face locations since the frame we detected in was scaled to 1/4 size
         top *= 4
         right *= 4
