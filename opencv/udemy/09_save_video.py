@@ -1,8 +1,8 @@
 import cv2 as cv
 
 cap = cv.VideoCapture(0)
-FourCC = cv.VideoWriter_fourcc(*"VXID")
-result = cv.VideoWriter("videos/test.avi", FourCC, 20.0, (640, 480))
+result = cv.VideoWriter(
+    "videos/output.avi", cv.VideoWriter_fourcc(*'MJPG'), 20.0, (640, 480))
 
 while(cap.isOpened()):
     ret, frame = cap.read()
